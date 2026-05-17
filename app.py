@@ -5,7 +5,7 @@ import random
 # 🔑 1. 구글 Gemini API 키 설정 완료 (선생님의 고유 키가 안전하게 내장되었습니다)
 GOOGLE_API_KEY = "AIzaSyAJtkCFGQGSjKtFejms06wCPRKHcn6IhAw"
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 st.set_page_config(page_title="⚡ 민주주의 런 AI 판정관", layout="centered")
 st.title("⚡ 민주주의 런 : AI 미디어 판정관")
