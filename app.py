@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 import random
 
-# 🔑 1. 구글 Gemini API 키 설정 완료 (선생님의 고유 키가 안전하게 내장되었습니다)
+# 🔑 1. 구글 Gemini API 키 설정 완료
 GOOGLE_API_KEY = "AIzaSyAJtkCFGQGSjKtFejms06wCPRKHcn6IhAw"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
@@ -75,7 +75,7 @@ elif choice_stage == "2단계: 1줄 정책 제안서":
         
         if st.button("정책 제안서 등록하기 🚀"):
             with st.spinner("AI 정부가 정책 심사 중..."):
-                prompt = f"{base_prompt}\n[미션] 학생들이 2단계 1줄 정책 제안서를 제출했다. 내용: {text_s2}\n조건: 현실적이고 구체적인 정책 대안이 포함되어 있는가? 50점 만점 기준 감점제(완벽하면 감점 0점, 미흡하면 1~5점 감점)로 채점하고 피드백을 '[2단계 판정 완료] 감점: -X점 (획득: Y점)' 형태로 3줄 이내 출력해줘."
+                prompt = f"{base_prompt}\n[미션] 학생들이 2단계 1줄 정책 제안서를 제출했다. 내용: {text_s2}\n조건: 현실적이고 구체적인 정책 대안이 포함되어 있는가? 완벽하면 감점 0점, 미흡하면 부족한 정도에 따라 1~5점을 감점해라. 출력 형식은 반드시 다른 말 섞지 말고 첫 줄에 '[2단계 판정 완료] 감점: -X점' 형태로만 시작하고 그 아래에 피드백을 적어줘."
                 response = model.generate_content(prompt)
                 st.write("---")
                 st.info(response.text)
@@ -99,7 +99,7 @@ elif choice_stage == "4단계: 독재 저항 반박 댓글":
         
         if st.button("반박 댓글 송신 🚀"):
             with st.spinner("보안 네트워크로 송신 중..."):
-                prompt = f"{base_prompt}\n[미션] 학생들이 4단계 독재 저항 댓글을 제출했다. 내용: {text_s4}\n조건: 단순 비난이 아니라 '자유와 권리 침해', '가짜뉴스 반박'에 대한 민주적 근거가 있는가? 완벽하면 감점 0점, 미흡하면 1~5점 감점하여 '[4단계 판정 완료] 감점: -X점' 형태로 출력해줘. 다른 조 카피 방지를 위해 비밀 처리됨을 안내해줘."
+                prompt = f"{base_prompt}\n[미션] 학생들이 4단계 독재 저항 댓글을 제출했다. 내용: {text_s4}\n조건: 단순 비난이 아니라 '자유와 권리 침해', '가짜뉴스 반박'에 대한 민주적 근거가 있는가? 완벽하면 감점 0점, 미흡하면 1~5점 감점해라. 출력 형식은 반드시 첫 줄에 '[4단계 판정 완료] 감점: -X점' 형태로만 시작하고 그 아래에 피드백을 적어줘. 다른 조 카피 방지를 위해 비밀 처리됨을 함께 안내해줘."
                 response = model.generate_content(prompt)
                 st.write("---")
                 st.warning(response.text)
