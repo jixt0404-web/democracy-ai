@@ -1,12 +1,14 @@
 import streamlit as st
 import google.generativeai as genai
+import google.ai.generativelanguage_v1beta as gl
 import random
 
-# 🔑 1. 구글 Gemini API 키 설정 및 절대경로 모델명 적용
+# 🔑 1. 구글 Gemini API 키 설정 및 호환성 강화 2.0 모델 적용
 GOOGLE_API_KEY = "AIzaSyAJtkCFGQGSjKtFejms06wCPRKHcn6IhAw"
 genai.configure(api_key=GOOGLE_API_KEY)
-# 구글 서버가 절대 헷갈리지 않도록 공식 전체 경로명으로 지정합니다.
-model = genai.GenerativeModel('models/gemini-1.5-flash')
+
+# 최신 파이썬 환경 오류를 방지하기 위해 2.0-flash 모델을 명시적으로 선언합니다.
+model = genai.GenerativeModel(model_name='models/gemini-2.0-flash')
 
 st.set_page_config(page_title="⚡ 민주주의 런 AI 판정관", layout="centered")
 st.title("⚡ 민주주의 런 : AI 미디어 판정관")
@@ -100,7 +102,7 @@ elif choice_stage == "4단계: 독재 저항 반박 댓글":
         
         if st.button("반박 댓글 송신 🚀"):
             with st.spinner("보안 네트워크로 송신 중..."):
-                prompt = f"{base_prompt}\n[미션] 학생들이 4단계 독재 저항 댓글을 제출했다. 내용: {text_s4}\n[엄격하고 공정한 채점 규칙]: 감정적인 단순 비난이나 욕설은 논리 부족으로 간주하여 3~5점을 대폭 감점해라. '가짜뉴스 반박', '시민의 자유와 권리', '정확한 근거 요구' 등 민주주의 가치를 담은 타당한 근거가 조리 있게 작성되었을 때만 '감점: -0점'을 주어라. 출력 형식은 반드시 첫 줄에 '[4단계 판정 완료] 감점: -X점' 형태로만 시작하고 그 아래에 명확한 채점 이유를 적어줘."
+                prompt = f"{base_prompt}\n[미션] 학생들이 4단계 독재 저항 댓글을 제출했다. 내용: {text_s4}\n[엄격하고 공정한 채점 규칙]: 감정적인 단순 비난이나 욕설은 논리 부족으로 간주하여 3~5점을 대폭 감점해라. '가짜뉴스 반박', '시민의 자유와 권리', '정확한 근거 요구' 등 민주주의 가치를 담을 타당한 근거가 조리 있게 작성되었을 때만 '감점: -0점'을 주어라. 출력 형식은 반드시 첫 줄에 '[4단계 판정 완료] 감점: -X점' 형태로만 시작하고 그 아래에 명확한 채점 이유를 적어줘."
                 response = model.generate_content(prompt)
                 st.write("---")
                 st.warning(response.text)
