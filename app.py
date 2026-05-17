@@ -2,10 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 import random
 
-# 🔑 1. 구글 Gemini API 키 설정 완료
+# 🔑 1. 구글 Gemini API 키 설정 및 절대경로 모델명 적용
 GOOGLE_API_KEY = "AIzaSyAJtkCFGQGSjKtFejms06wCPRKHcn6IhAw"
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+# 구글 서버가 절대 헷갈리지 않도록 공식 전체 경로명으로 지정합니다.
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 st.set_page_config(page_title="⚡ 민주주의 런 AI 판정관", layout="centered")
 st.title("⚡ 민주주의 런 : AI 미디어 판정관")
